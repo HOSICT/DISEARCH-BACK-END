@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -33,8 +35,15 @@ public class TagController {
     }
 
     @PostMapping
-    public Tag createOrUpdateTag(@RequestBody Tag tag) {
-        return tagService.saveOrUpdateTag(tag.getName());
+    public ResponseEntity<List<Tag>> createTags(@RequestBody Map<String, List<String>> tagMap) {
+        if (tagMap != null && tagMap.containsKey("tags")) {
+            List<String> tagNames = tagMap.get("tags");
+            List<Tag> createdOrUpdatedTags = tagService.createOrUpdateTags(tagNames);
+            return ResponseEntity.ok(createdOrUpdatedTags);
+        } else {
+            // 요청 본문에 "tags" 키가 존재하지 않는 경우, 잘못된 요청으로 간주
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/{id}")
