@@ -33,4 +33,17 @@ public class TagService {
     public void deleteTag(Long id) {
         tagRepository.deleteById(id);
     }
+
+    public Tag saveOrUpdateTag(String tagName) {
+        Optional<Tag> existingTag = tagRepository.findByName(tagName);
+        if (existingTag.isPresent()) {
+            Tag tag = existingTag.get();
+            tag.setCount(tag.getCount() + 1);
+            return tagRepository.save(tag);
+        } else {
+            Tag newTag = new Tag();
+            newTag.setName(tagName);
+            return tagRepository.save(newTag);
+        }
+    }
 }

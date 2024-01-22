@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/tags")
@@ -32,8 +33,8 @@ public class TagController {
     }
 
     @PostMapping
-    public Tag createTag(@RequestBody Tag tag) {
-        return tagService.saveTag(tag);
+    public Tag createOrUpdateTag(@RequestBody Tag tag) {
+        return tagService.saveOrUpdateTag(tag.getName());
     }
 
     @PutMapping("/{id}")
@@ -56,4 +57,6 @@ public class TagController {
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+
 }

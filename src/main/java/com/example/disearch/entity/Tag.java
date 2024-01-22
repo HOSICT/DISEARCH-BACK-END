@@ -15,6 +15,8 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Integer count = 1;
+
     @Column(length = 255, nullable = false)
     private String name;
 
@@ -35,6 +37,14 @@ public class Tag {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     @Override
