@@ -60,9 +60,9 @@ public class TagService {
                         Tag newTag = new Tag(name);
                         return newTag;
                     });
-            tagRepository.save(tag); // Save regardless if it's new or updated
+            tagRepository.save(tag);
             tags.add(tag);
         }
-        return tags; // Return the list of tags
+        return tags;
     }
 }

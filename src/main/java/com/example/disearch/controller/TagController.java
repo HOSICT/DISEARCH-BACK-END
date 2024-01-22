@@ -41,7 +41,6 @@ public class TagController {
             List<Tag> createdOrUpdatedTags = tagService.createOrUpdateTags(tagNames);
             return ResponseEntity.ok(createdOrUpdatedTags);
         } else {
-            // 요청 본문에 "tags" 키가 존재하지 않는 경우, 잘못된 요청으로 간주
             return ResponseEntity.badRequest().build();
         }
     }
