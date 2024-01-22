@@ -36,8 +36,8 @@ public class TagController {
 
     @PostMapping
     public ResponseEntity<List<Tag>> createTags(@RequestBody Map<String, List<String>> tagMap) {
-        if (tagMap != null && tagMap.containsKey("tags")) {
-            List<String> tagNames = tagMap.get("tags");
+        if (tagMap != null && tagMap.containsKey("tag")) {
+            List<String> tagNames = tagMap.get("tag");
             List<Tag> createdOrUpdatedTags = tagService.createOrUpdateTags(tagNames);
             return ResponseEntity.ok(createdOrUpdatedTags);
         } else {
