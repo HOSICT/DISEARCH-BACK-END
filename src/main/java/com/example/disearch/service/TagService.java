@@ -5,6 +5,7 @@ import com.example.disearch.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,5 +46,23 @@ public class TagService {
             newTag.setName(tagName);
             return tagRepository.save(newTag);
         }
+    }
+
+    public List<Tag> createOrUpdateTags(List<String> tagNames) {
+        List<Tag> tags = new ArrayList<>();
+        for (String name : tagNames) {
+            Tag tag = tagRepository.findByName(name)
+                    .map(existingTag -> {
+                        existingTag.setCount(existingTag.getCount() + 1);
+                        return existingTag;
+                    })
+                    .orElseGet(() -> {
+                        Tag newTag = new Tag(name);
+                        return newTag;
+                    });
+            tagRepository.save(tag); // Save regardless if it's new or updated
+            tags.add(tag);
+        }
+        return tags; // Return the list of tags
     }
 }
