@@ -47,4 +47,16 @@ public class PostService {
         post.setTags(tags);
         return postRepository.save(post);
     }
+
+    public List<Post> getPosts(String tag, String category) {
+        if (tag != null) {
+            return postRepository.findAllByTagsName(tag);
+        } else if (category != null) {
+            return postRepository.findAllByCategory(category);
+        } else {
+            return postRepository.findAll();
+        }
+    }
+
+
 }
