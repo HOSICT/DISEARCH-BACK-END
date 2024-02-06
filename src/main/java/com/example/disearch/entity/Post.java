@@ -14,6 +14,7 @@ public class Post {
     private Long id;
 
     private Long serverId;
+    private String iconId;
     private String serverName;
     private String category;
     private String content;
@@ -33,6 +34,10 @@ public class Post {
 
     public Long getServerId() {
         return serverId;
+    }
+
+    public String getIconId() {
+        return iconId;
     }
 
     public String getServerName() {
@@ -55,13 +60,16 @@ public class Post {
         return tags;
     }
 
-    // Setters
     public void setId(Long id) {
         this.id = id;
     }
 
     public void setServerId(Long serverId) {
         this.serverId = serverId;
+    }
+
+    public void setIconId(String iconId) {
+        this.iconId = iconId;
     }
 
     public void setServerName(String serverName) {

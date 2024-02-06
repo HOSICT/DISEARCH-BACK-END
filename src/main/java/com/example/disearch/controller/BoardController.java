@@ -38,18 +38,31 @@ public class BoardController {
         Page<Post> postPage = postService.getPosts(tag, category, pageable);
 
 
-        List<Map<String, Object>> postList = postPage.getContent().stream().map(post -> Map.of(
-                "id", post.getId(),
-                "serverId", post.getServerId(),
-                "serverName", post.getServerName(),
-                "category", post.getCategory(),
-                "tag", post.getTags().stream().map(Tag::getName).collect(Collectors.toList()),
-                "content", post.getContent(),
-                "createdAt", post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss"))
-        )).collect(Collectors.toList());
+        List<Map<String, Object>> postList = postPage.getContent().stream().map(post -> {
+            List<String> tagNames = Optional.ofNullable(post.getTags())
+                    .orElse(Collections.emptySet())
+                    .stream()
+                    .map(Tag::getName)
+                    .collect(Collectors.toList());
+
+            String createdAt = Optional.ofNullable(post.getCreatedAt())
+                    .map(dateTime -> dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss")))
+                    .orElse(null);
+
+            Map<String, Object> postMap = new LinkedHashMap<>();
+            postMap.put("id", post.getId());
+            postMap.put("serverId", post.getServerId());
+            postMap.put("serverName", post.getServerName());
+            postMap.put("iconId", post.getIconId());
+            postMap.put("category", post.getCategory());
+            postMap.put("tag", tagNames);
+            postMap.put("content", post.getContent());
+            postMap.put("createdAt", createdAt);
+            return postMap;
+        }).collect(Collectors.toList());
 
         Map<String, Object> response = Map.of(
-                "status", "200",
+                "status", 200,
                 "msg", "ok",
                 "data", Map.of(
                         "list", postList,

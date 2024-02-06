@@ -4,9 +4,13 @@ import com.example.disearch.controller.dto.PostRequest;
 import com.example.disearch.controller.dto.PostResponse;
 import com.example.disearch.entity.Post;
 import com.example.disearch.service.PostService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/create")
@@ -20,15 +24,20 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<PostResponse> createPost(@RequestBody PostRequest postRequest) {
+    public ResponseEntity<PostResponse> createPost(@Valid @RequestBody PostRequest postRequest) {
         Post post = postService.createPost(
                 postRequest.getServerId(),
                 postRequest.getServerName(),
+                postRequest.getIconId(),
                 postRequest.getCategory(),
                 postRequest.getTag(),
                 postRequest.getContent()
         );
-        return ResponseEntity.ok(new PostResponse(post.getServerId()));
-    }
 
+        Map<String, Long> data = Collections.singletonMap("serverId", post.getServerId());
+
+        PostResponse postResponse = new PostResponse(200, "ok", data);
+
+        return ResponseEntity.ok(postResponse);
+    }
 }

@@ -27,10 +27,11 @@ public class PostService {
         this.tagRepository = tagRepository;
     }
 
-    public Post createPost(Long serverId, String serverName, String category, List<String> tagNames, String content) {
+    public Post createPost(Long serverId, String serverName, String iconId, String category, List<String> tagNames, String content) {
         Post post = new Post();
         post.setServerId(serverId);
         post.setServerName(serverName);
+        post.setIconId(iconId);
         post.setCategory(category);
         post.setContent(content);
 

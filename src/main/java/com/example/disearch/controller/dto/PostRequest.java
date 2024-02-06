@@ -1,9 +1,13 @@
 package com.example.disearch.controller.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 public class PostRequest {
     private Long serverId;
+    @NotNull(message = "iconId must be exist")
+    private String iconId = null;
     private String serverName;
     private String category;
     private List<String> tag;
@@ -12,6 +16,8 @@ public class PostRequest {
     public Long getServerId() {
         return serverId;
     }
+
+    public String getIconId() { return  iconId; }
 
     public String getServerName() {
         return serverName;
