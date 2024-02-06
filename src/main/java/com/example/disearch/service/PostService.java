@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,13 +53,13 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public List<Post> getPosts(String tag, String category) {
+    public Page<Post> getPosts(String tag, String category, Pageable pageable) {
         if (tag != null) {
-            return postRepository.findAllByTagsName(tag);
+            return postRepository.findAllByTagsName(tag, pageable);
         } else if (category != null) {
-            return postRepository.findAllByCategory(category);
+            return postRepository.findAllByCategory(category, pageable);
         } else {
-            return postRepository.findAll();
+            return postRepository.findAll(pageable);
         }
     }
 

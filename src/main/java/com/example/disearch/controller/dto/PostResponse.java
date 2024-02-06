@@ -6,6 +6,7 @@ public class PostResponse {
     public PostResponse(Long serverId) {
         this.serverId = serverId;
     }
+
     public Long getServerId() {
         return serverId;
     }

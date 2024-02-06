@@ -5,6 +5,7 @@ import com.example.disearch.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -20,15 +21,9 @@ public class TagController {
     }
 
     @GetMapping
-    public List<Tag> getAllTags() {
-        return tagService.findAllTags();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Tag> getTagById(@PathVariable Long id) {
-        return tagService.findTagById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<List<Tag>> getTopTags() {
+        List<Tag> topTags = tagService.getTop15Tags();
+        return ResponseEntity.ok(topTags);
     }
 
     @PostMapping

@@ -65,4 +65,9 @@ public class TagService {
         }
         return tags;
     }
+
+    public List<Tag> getTop15Tags() {
+        return tagRepository.findTop15ByOrderByCountDesc();
+    }
+
 }
