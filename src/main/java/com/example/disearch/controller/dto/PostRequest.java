@@ -9,7 +9,6 @@ public class PostRequest {
     private List<String> tag;
     private String content;
 
-    // Getters
     public Long getServerId() {
         return serverId;
     }
