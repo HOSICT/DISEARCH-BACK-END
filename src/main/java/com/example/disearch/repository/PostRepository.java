@@ -13,11 +13,12 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByTagsName(@Param("tagName") String tagName);
+
     List<Post> findAllByCategory(String category);
 
     Page<Post> findAllByTagsName(String tagName, Pageable pageable);
-    Page<Post> findAllByCategory(String category, Pageable pageable);
 
+    Page<Post> findAllByCategory(String category, Pageable pageable);
 
 
 }
