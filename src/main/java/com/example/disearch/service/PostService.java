@@ -6,6 +6,10 @@ import com.example.disearch.repository.PostRepository;
 import com.example.disearch.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -58,5 +62,16 @@ public class PostService {
         }
     }
 
+    public Page<Post> getPostsPaged(int page, String tag, String category) {
+        Pageable pageable = PageRequest.of(page, 12, Sort.by("id").descending());
+
+        if (tag != null) {
+            return postRepository.findAllByTagsName(tag, pageable);
+        } else if (category != null) {
+            return postRepository.findAllByCategory(category, pageable);
+        } else {
+            return postRepository.findAll(pageable);
+        }
+    }
 
 }
