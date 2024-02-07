@@ -1,9 +1,11 @@
 package com.example.disearch.service;
 
+import com.example.disearch.controller.dto.PostRequest;
 import com.example.disearch.entity.Post;
 import com.example.disearch.entity.Tag;
 import com.example.disearch.repository.PostRepository;
 import com.example.disearch.repository.TagRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -27,17 +29,21 @@ public class PostService {
         this.tagRepository = tagRepository;
     }
 
-    public Post createPost(String serverId, String serverName, String iconId, String userId, String category, List<String> tagNames, String content) {
-        Post post = new Post();
-        post.setServerId(serverId);
-        post.setServerName(serverName);
-        post.setIconId(iconId);
-        post.setUserId(userId);
-        post.setCategory(category);
-        post.setContent(content);
+    @Transactional
+    public Post createAndReplacePost(PostRequest postRequest) {
+        postRepository.findByServerId(postRequest.getServerId())
+                .ifPresent(post -> postRepository.delete(post));
+
+        Post newPost = new Post();
+        newPost.setServerId(postRequest.getServerId());
+        newPost.setServerName(postRequest.getServerName());
+        newPost.setIconId(postRequest.getServerId());
+        newPost.setUserId(postRequest.getUserId());
+        newPost.setCategory(postRequest.getCategory());
+        newPost.setContent(postRequest.getContent());
 
         Set<Tag> tags = new HashSet<>();
-        for (String tagName : tagNames) {
+        for (String tagName : postRequest.getTag()) {
             Tag tag = tagRepository.findByName(tagName)
                     .map(existingTag -> {
                         existingTag.setCount(existingTag.getCount() + 1);
@@ -51,8 +57,8 @@ public class PostService {
             tags.add(tag);
             tagRepository.save(tag);
         }
-        post.setTags(tags);
-        return postRepository.save(post);
+        newPost.setTags(tags);
+        return postRepository.save(newPost);
     }
 
     public Page<Post> getPosts(String tag, String category, Pageable pageable) {

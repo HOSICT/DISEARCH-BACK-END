@@ -25,15 +25,8 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<PostResponse> createPost(@Valid @RequestBody PostRequest postRequest) {
-        Post post = postService.createPost(
-                postRequest.getServerId(),
-                postRequest.getServerName(),
-                postRequest.getIconId(),
-                postRequest.getUserId(),
-                postRequest.getCategory(),
-                postRequest.getTag(),
-                postRequest.getContent()
-        );
+        Post post = postService.createAndReplacePost(postRequest);
+
 
         Map<String, String> data = Collections.singletonMap("serverId", post.getServerId());
 
@@ -41,4 +34,5 @@ public class PostController {
 
         return ResponseEntity.ok(postResponse);
     }
+
 }
