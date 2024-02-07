@@ -9,9 +9,9 @@ public class PostResponse {
 
     private int status;
     private String msg;
-    private Map<String, Long> data;
+    private Map<String, String> data;
 
-    public PostResponse(int status, String msg, Map<String, Long> data) {
+    public PostResponse(int status, String msg, Map<String, String> data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
@@ -25,7 +25,7 @@ public class PostResponse {
         return msg;
     }
 
-    public Map<String, Long> getData() {
+    public Map<String, String> getData() {
         return data;
     }
 
@@ -37,7 +37,7 @@ public class PostResponse {
         this.msg = msg;
     }
 
-    public void setData(Map<String, Long> data) {
+    public void setData(Map<String, String> data) {
         this.data = data;
     }
 }
