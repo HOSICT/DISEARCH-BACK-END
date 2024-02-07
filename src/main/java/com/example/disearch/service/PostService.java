@@ -77,4 +77,8 @@ public class PostService {
         }
     }
 
+    public List<Post> findPostsByUserId(String userId) {
+        return postRepository.findByUserId(userId);
+    }
+
 }
