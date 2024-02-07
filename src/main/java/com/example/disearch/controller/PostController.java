@@ -29,6 +29,7 @@ public class PostController {
                 postRequest.getServerId(),
                 postRequest.getServerName(),
                 postRequest.getIconId(),
+                postRequest.getUserId(),
                 postRequest.getCategory(),
                 postRequest.getTag(),
                 postRequest.getContent()

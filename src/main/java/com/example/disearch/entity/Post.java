@@ -15,6 +15,7 @@ public class Post {
 
     private String serverId;
     private String iconId;
+    private String userId;
     private String serverName;
     private String category;
     private String content;
@@ -36,9 +37,9 @@ public class Post {
         return serverId;
     }
 
-    public String getIconId() {
-        return iconId;
-    }
+    public String getIconId() { return iconId; }
+
+    public String getUserId() { return userId; }
 
     public String getServerName() {
         return serverName;
@@ -71,6 +72,8 @@ public class Post {
     public void setIconId(String iconId) {
         this.iconId = iconId;
     }
+
+    public void setUserId(String userId) { this.userId = userId; }
 
     public void setServerName(String serverName) {
         this.serverName = serverName;

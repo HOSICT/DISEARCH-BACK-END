@@ -8,6 +8,7 @@ public class PostRequest {
     private String serverId;
     @NotNull(message = "iconId must be exist")
     private String iconId = null;
+    private String userId;
     private String serverName;
     private String category;
     private List<String> tag;
@@ -18,6 +19,8 @@ public class PostRequest {
     }
 
     public String getIconId() { return  iconId; }
+
+    public String getUserId() { return userId; }
 
     public String getServerName() {
         return serverName;
