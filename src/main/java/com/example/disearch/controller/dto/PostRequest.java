@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public class PostRequest {
-    private Long serverId;
+    private String serverId;
     @NotNull(message = "iconId must be exist")
     private String iconId = null;
     private String serverName;
@@ -13,7 +13,7 @@ public class PostRequest {
     private List<String> tag;
     private String content;
 
-    public Long getServerId() {
+    public String getServerId() {
         return serverId;
     }
 

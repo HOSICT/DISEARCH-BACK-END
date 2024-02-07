@@ -34,7 +34,7 @@ public class PostController {
                 postRequest.getContent()
         );
 
-        Map<String, Long> data = Collections.singletonMap("serverId", post.getServerId());
+        Map<String, String> data = Collections.singletonMap("serverId", post.getServerId());
 
         PostResponse postResponse = new PostResponse(200, "ok", data);
 

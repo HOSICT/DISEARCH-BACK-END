@@ -13,7 +13,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long serverId;
+    private String serverId;
     private String iconId;
     private String serverName;
     private String category;
@@ -32,7 +32,7 @@ public class Post {
         return id;
     }
 
-    public Long getServerId() {
+    public String getServerId() {
         return serverId;
     }
 
@@ -64,7 +64,7 @@ public class Post {
         this.id = id;
     }
 
-    public void setServerId(Long serverId) {
+    public void setServerId(String serverId) {
         this.serverId = serverId;
     }
 
