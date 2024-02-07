@@ -6,8 +6,8 @@ import java.util.List;
 
 public class PostRequest {
     private String serverId;
-    @NotNull(message = "iconId must be exist")
-    private String iconId = null;
+
+    private String iconId;
     private String userId;
     private String serverName;
     private String category;
