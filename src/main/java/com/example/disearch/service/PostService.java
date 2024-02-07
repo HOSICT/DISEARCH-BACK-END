@@ -27,11 +27,12 @@ public class PostService {
         this.tagRepository = tagRepository;
     }
 
-    public Post createPost(String serverId, String serverName, String iconId, String category, List<String> tagNames, String content) {
+    public Post createPost(String serverId, String serverName, String iconId, String userId, String category, List<String> tagNames, String content) {
         Post post = new Post();
         post.setServerId(serverId);
         post.setServerName(serverName);
         post.setIconId(iconId);
+        post.setUserId(userId);
         post.setCategory(category);
         post.setContent(content);
 
@@ -74,6 +75,10 @@ public class PostService {
         } else {
             return postRepository.findAll(pageable);
         }
+    }
+
+    public List<Post> findPostsByUserId(String userId) {
+        return postRepository.findByUserId(userId);
     }
 
 }
