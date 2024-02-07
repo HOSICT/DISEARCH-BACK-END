@@ -37,7 +37,7 @@ public class PostService {
         Post newPost = new Post();
         newPost.setServerId(postRequest.getServerId());
         newPost.setServerName(postRequest.getServerName());
-        newPost.setIconId(postRequest.getServerId());
+        newPost.setIconId(postRequest.getIconId());
         newPost.setUserId(postRequest.getUserId());
         newPost.setCategory(postRequest.getCategory());
         newPost.setContent(postRequest.getContent());
