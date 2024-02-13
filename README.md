@@ -12,7 +12,7 @@
 
 ## 개발 환경
 - Front : TypeScript, SCSS, CSS
-**Back-End** : Java
+- **Back-End** : Java
 - 버전 관리 : Github
 - 협업 툴 : Discord, Notion
   
