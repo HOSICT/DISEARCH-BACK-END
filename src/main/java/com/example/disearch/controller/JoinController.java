@@ -19,7 +19,7 @@ public class JoinController {
     @Value("${DISCORD_BOT_TOKEN}")
     private String botToken;
 
-    @PostMapping
+    @PostMapping("/join")
     public ResponseEntity<String> joinGuild(@RequestBody Map<String, String> request) {
         String serverId = request.get("serverId");
         String url = "https://discord.com/api/guilds/" + serverId + "/templates";
