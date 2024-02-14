@@ -13,10 +13,6 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    List<Post> findAllByTagsName(@Param("tagName") String tagName);
-
-    List<Post> findAllByCategory(String category);
-
     List<Post> findByUserId(String userId);
 
     Page<Post> findAllByTagsName(String tagName, Pageable pageable);
@@ -25,5 +21,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Optional<Post> findByServerId(String serverId);
 
+    Optional<Post> findByIdAndUserId(Long id, String userId);
 
 }

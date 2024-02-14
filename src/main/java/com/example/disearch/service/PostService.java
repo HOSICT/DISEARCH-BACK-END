@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -85,6 +86,15 @@ public class PostService {
 
     public List<Post> findPostsByUserId(String userId) {
         return postRepository.findByUserId(userId);
+    }
+
+    public void deletePostByIdAndUserId(Long id, String userId) {
+        Optional<Post> post = postRepository.findByIdAndUserId(id, userId);
+        if (post.isPresent()) {
+            postRepository.delete(post.get());
+        } else {
+            throw new RuntimeException("Post not found with id " + id + " and userId " + userId);
+        }
     }
 
 }

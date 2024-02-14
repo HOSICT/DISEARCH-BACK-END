@@ -6,10 +6,7 @@ import com.example.disearch.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -51,5 +48,15 @@ public class MypageController {
         responseBody.put("data", Map.of("list", postList));
 
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/board")
+    public ResponseEntity<?> deletePost(@RequestHeader("id") Long id, @RequestHeader("userId") String userId) {
+        try {
+            postService.deletePostByIdAndUserId(id, userId);
+            return ResponseEntity.ok(Map.of("status", "200", "msg", "ok"));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("status", "404", "msg", "Not Found"));
+        }
     }
 }
