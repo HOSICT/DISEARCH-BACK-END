@@ -8,6 +8,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -20,7 +21,7 @@ public class JoinController {
     private String botToken;
 
     @PostMapping("/join")
-    public ResponseEntity<String> joinGuild(@RequestBody Map<String, String> request) {
+    public ResponseEntity<?> joinGuild(@RequestBody Map<String, String> request) {
         String guildId = request.get("serverId");
         String guildsUrl = "https://discord.com/api/guilds/" + guildId;
 
@@ -39,13 +40,17 @@ public class JoinController {
         HttpEntity<String> postEntity = new HttpEntity<>(requestBody.toString(), headers);
         ResponseEntity<String> inviteResponse = restTemplate.exchange(invitesUrl, HttpMethod.POST, postEntity, String.class);
 
-
         JSONObject inviteResponseBody = new JSONObject(inviteResponse.getBody());
-        if (inviteResponseBody.has("code")) {
-            String code = inviteResponseBody.getString("code");
-            return ResponseEntity.ok(code);
-        }
+        Map<String, Object> responseMap = inviteResponseBody.toMap();
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Code not found in the response");
+        return ResponseEntity.ok(responseMap);
+
+//        JSONObject inviteResponseBody = new JSONObject(inviteResponse.getBody());
+//        if (inviteResponseBody.has("code")) {
+//            String code = inviteResponseBody.getString("code");
+//            return ResponseEntity.ok(code);
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Code not found in the response");
     }
 }
