@@ -35,7 +35,8 @@ public class JoinController {
 
         String invitesUrl = "https://discord.com/api/channels/" + systemChannelId + "/invites";
 
-        HttpEntity<String> postEntity = new HttpEntity<>("{}", headers);
+        JSONObject requestBody = new JSONObject();
+        HttpEntity<String> postEntity = new HttpEntity<>(requestBody.toString(), headers);
         ResponseEntity<String> inviteResponse = restTemplate.exchange(invitesUrl, HttpMethod.POST, postEntity, String.class);
 
 
