@@ -51,7 +51,7 @@ public class MypageController {
     }
 
     @DeleteMapping("/board")
-    public ResponseEntity<?> deletePost(@RequestHeader("id") Long id, @RequestHeader("userId") String userId) {
+    public ResponseEntity<?> deletePost(@RequestHeader("Id") Long id, @RequestHeader("UserId") String userId) {
         try {
             postService.deletePostByIdAndUserId(id, userId);
             return ResponseEntity.ok(Map.of("status", "200", "msg", "ok"));
