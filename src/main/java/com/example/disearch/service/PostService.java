@@ -88,13 +88,19 @@ public class PostService {
         return postRepository.findByUserId(userId);
     }
 
+    @Transactional
     public void deletePostByIdAndUserId(Long id, String userId) {
         Optional<Post> post = postRepository.findByIdAndUserId(id, userId);
         if (post.isPresent()) {
-            postRepository.delete(post.get());
+            Post postToDelete = post.get();
+            Set<Tag> tags = postToDelete.getTags();
+            for (Tag tag : tags) {
+                tagRepository.decrementCountByName(tag.getName());
+                tagRepository.deleteByLowerThanCount(tag.getName(), 0);
+            }
+            postRepository.delete(postToDelete);
         } else {
             throw new RuntimeException("Post not found with id " + id + " and userId " + userId);
         }
     }
-
 }
