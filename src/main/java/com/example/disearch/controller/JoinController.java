@@ -26,22 +26,23 @@ public class JoinController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bot " + botToken);
+        headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         ResponseEntity<String> guildResponse = restTemplate.exchange(guildsUrl, HttpMethod.GET, entity, String.class);
         JSONObject guildResponseBody = new JSONObject(guildResponse.getBody());
         String systemChannelId = guildResponseBody.getString("system_channel_id");
-        String invitesUrl = "https://discord.com/api/channels/" + systemChannelId + "/invites";
-        ResponseEntity<String> inviteResponse = restTemplate.exchange(invitesUrl, HttpMethod.GET, entity, String.class);
 
-        String responseString = inviteResponse.getBody();
-        JSONArray jsonArray = new JSONArray(responseString);
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-            if (jsonObject.has("code")) {
-                String code = jsonObject.getString("code");
-                return ResponseEntity.ok(code);
-            }
+        String invitesUrl = "https://discord.com/api/channels/" + systemChannelId + "/invites";
+
+        HttpEntity<String> postEntity = new HttpEntity<>("{}", headers);
+        ResponseEntity<String> inviteResponse = restTemplate.exchange(invitesUrl, HttpMethod.POST, postEntity, String.class);
+
+
+        JSONObject inviteResponseBody = new JSONObject(inviteResponse.getBody());
+        if (inviteResponseBody.has("code")) {
+            String code = inviteResponseBody.getString("code");
+            return ResponseEntity.ok(code);
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Code not found in the response");
