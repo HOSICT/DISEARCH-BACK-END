@@ -17,13 +17,13 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     @Transactional
     @Modifying
-    @Query("update Tag t set t.count = t.count - 1 where t.name = :name and t.count > 1")
+    @Query("update Tag t set t.count = t.count - 1 where t.name = :name and t.count > 0")
     void decrementCountByName(@Param("name") String name);
 
     @Transactional
     @Modifying
-    @Query("delete from Tag t where t.name = :name and t.count <= :count")
-    void deleteByLowerThanCount(@Param("name") String name, @Param("count") int count);
+    @Query("delete from Tag t where t.count = 0")
+    void deleteTagsWithZeroCount();
 
     List<Tag> findTop15ByOrderByCountDesc();
 }

@@ -54,6 +54,7 @@ public class MypageController {
     public ResponseEntity<?> deletePost(@RequestHeader("Id") Long id, @RequestHeader("UserId") String userId) {
         try {
             postService.deletePostByIdAndUserId(id, userId);
+            postService.deleteTagsByIdAndUserId();
             return ResponseEntity.ok(Map.of("status", "200", "msg", "ok"));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("status", "404", "msg", "Not Found"));

@@ -96,11 +96,19 @@ public class PostService {
             Set<Tag> tags = postToDelete.getTags();
             for (Tag tag : tags) {
                 tagRepository.decrementCountByName(tag.getName());
-                tagRepository.deleteByLowerThanCount(tag.getName(), 0);
+            }
+            for (Tag tag : tags) {
+                Optional<Tag> tagWithZeroCount = tagRepository.findByName(tag.getName())
+                        .filter(t -> t.getCount() == 0);
+                tagWithZeroCount.ifPresent(tagRepository::delete);
             }
             postRepository.delete(postToDelete);
         } else {
             throw new RuntimeException("Post not found with id " + id + " and userId " + userId);
         }
+    }
+    @Transactional
+    public void deleteTagsByIdAndUserId(){
+        tagRepository.deleteTagsWithZeroCount();
     }
 }
