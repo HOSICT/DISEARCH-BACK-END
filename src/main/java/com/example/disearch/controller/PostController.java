@@ -17,7 +17,6 @@ import java.util.Map;
 public class PostController {
 
     private final PostService postService;
-
     @Autowired
     public PostController(PostService postService) {
         this.postService = postService;
@@ -26,6 +25,7 @@ public class PostController {
     @PostMapping
     public ResponseEntity<PostResponse> createPost(@Valid @RequestBody PostRequest postRequest) {
         Post post = postService.createAndReplacePost(postRequest);
+        postService.deleteTags();
 
 
         Map<String, String> data = Collections.singletonMap("serverId", post.getServerId());
