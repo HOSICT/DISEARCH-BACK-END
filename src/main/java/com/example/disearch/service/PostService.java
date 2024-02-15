@@ -33,7 +33,18 @@ public class PostService {
     @Transactional
     public Post createAndReplacePost(PostRequest postRequest) {
         postRepository.findByServerId(postRequest.getServerId())
-                .ifPresent(post -> postRepository.delete(post));
+                .ifPresent(post ->{
+                    Set<Tag> tags = post.getTags();
+                    for (Tag tag : tags) {
+                        tag.setCount(tag.getCount() - 1);
+                        if (tag.getCount() == 0) {
+                            tagRepository.delete(tag);
+                        } else {
+                            tagRepository.save(tag);
+                        }
+                    }
+                    postRepository.delete(post);
+                });
 
         Post newPost = new Post();
         newPost.setServerId(postRequest.getServerId());
@@ -61,6 +72,7 @@ public class PostService {
         newPost.setTags(tags);
         return postRepository.save(newPost);
     }
+
 
     public Page<Post> getPosts(String tag, String category, Pageable pageable) {
         if (tag != null) {
@@ -108,7 +120,7 @@ public class PostService {
         }
     }
     @Transactional
-    public void deleteTagsByIdAndUserId(){
+    public void deleteTags(){
         tagRepository.deleteTagsWithZeroCount();
     }
 }
